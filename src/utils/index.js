@@ -289,3 +289,16 @@ export function deepClone(source) {
   }
   return targetObj;
 }
+
+/**
+ * 判断是否有权限
+ * @param {Array} roles 登录用户的角色
+ * @param {Array} permissionRoles 允许的角色
+ */
+export function hasPermission(roles, permissionRoles) {
+  // 如果就有admin权限，直接通过
+  if (roles.indexOf('admin') >= 0) return true;
+  // 没有指定任何允许权限，直接通过
+  if (!permissionRoles) return true;
+  return roles.some(role => permissionRoles.indexOf(role) >= 0);
+}
