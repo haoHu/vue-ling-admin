@@ -60,8 +60,8 @@ exports.cssLoaders = function (options) {
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass'),
-    styleus: generateLoaders('styleus'),
-    styl: generateLoaders('styleus')
+    stylus: generateLoaders('stylus'),
+    styl: generateLoaders('stylus')
   };
 
 }

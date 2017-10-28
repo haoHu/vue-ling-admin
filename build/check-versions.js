@@ -6,6 +6,10 @@ const packageConfig = require('../package.json');
 // shelljs模块封装了child_process,使调用系统命令更方便
 const shell = require('shelljs');
 
+function exec (cmd) {
+  return require('child_process').execSync(cmd).toString().trim();
+}
+
 var versionRequirements = [
   {
     name: 'node',

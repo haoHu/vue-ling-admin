@@ -33,7 +33,8 @@ const devMiddleware = require('webpack-dev-middleware')(compiler, {
 });
 
 const hotMiddleware = require('webpack-hot-middleware')(compiler, {
-  log: () => {}
+  log: () => {},
+  heartbeat: 2000
 });
 
 // 设置当html-webpack-plugin模板改变时，强制重新加载页面
