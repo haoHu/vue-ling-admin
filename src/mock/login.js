@@ -1,5 +1,14 @@
 import { param2Obj } from '@/utils';
 
+/**
+ * 定义ajax api response数据结构
+ * {errno, errmsg, data}
+ *
+ * @errno: 0:ok;
+ * @errmsg: '错误信息'
+ * @data: Object
+ */
+
 const userMap = {
   admin: {
     code: 20000,
@@ -27,11 +36,19 @@ const userMap = {
   }
 };
 
+// const userMap = {
+//   'admin@ling.ai': {
+//     errno: 0,
+//     role: ['admin']
+//   }
+// }
+
 export default {
   loginByUsername: config => {
     const { username } = JSON.parse(config.body);
     return userMap[username];
   },
+
   getUserInfo: config => {
     const { token } = param2Obj(config.url);
     if (userMap[token]) {

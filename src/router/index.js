@@ -14,6 +14,7 @@ Vue.use(Router);
 
 // 引入真个系统布局
 import Layout from '../views/layout/Layout';
+import LoginLayout from '../views/layout/LoginLayout';
 
 /**
  * RouterMap的数据结构：
@@ -29,8 +30,39 @@ import Layout from '../views/layout/Layout';
  */
 export const constantRouterMap = [
   // 登录页面
-  { path: '/login', component: _import('login/index'), hidden: true },
-  { path: '/signup', component: _import('signup/index'), hidden: true },
+  {
+    path: '/login',
+    component: LoginLayout,
+    redirect: '/login/index',
+    name: '登录',
+    hidden: true,
+    children: [{ path: 'index', component: _import('login/index'), hidden: true }]
+  },
+  // 注册页面
+  {
+    path: '/signup',
+    component: LoginLayout,
+    redirect: '/signup/index',
+    name: '注册',
+    hidden: true,
+    children: [{ path: 'index', component: _import('signup/index'), hidden: true }]
+  },
+  // 重置密码页面
+  {
+    path: '/resetpwd',
+    component: LoginLayout,
+    redirect: '/resetpwd/index',
+    name: '重置密码',
+    hidden: true,
+    children: [{ path: 'index', component: _import('login/resetpwd'), hidden: true }]
+  },
+
+  // // 登录页面
+  // { path: '/login', component: _import('login/index'), hidden: true },
+  // // 注册页面
+  // { path: '/signup', component: _import('signup/index'), hidden: true },
+  // // 重置密码页面
+  // { path: '/resetpwd', component: _import('login/resetpwd'), hidden: true },
   // 用于第三方登录验证后的重定向
   { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
   // 公共的异常情况页面包括404，401，500等，在这里定义

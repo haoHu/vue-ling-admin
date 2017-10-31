@@ -35,7 +35,7 @@ import { hasPermission } from '@/utils/index';
 // }
 
 // 免登陆白名单
-const WhiteList = ['/login', 'authredirect'];
+const WhiteList = ['/login/index', '/authredirect', '/signup/index', '/resetpwd/index'];
 router.beforeEach((to, from, next) => {
   // 开启progress
   NProgress.start();

@@ -6,7 +6,9 @@ Mock.setup({
 });
 
 // 登录接口
+// 接口弃用
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername);
+// Mock.mock(/\/login\/login/, 'post', loginAPI.loginByEmail);
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout);
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo);
 
