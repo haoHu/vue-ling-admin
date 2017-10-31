@@ -40,5 +40,10 @@ export default {
       return Promise.reject('error');
     }
   },
-  logout: () => 'success'
+  logout: () => {
+    return {
+      code: 20000,
+      message: 'success'
+    };
+  }
 };

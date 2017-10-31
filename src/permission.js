@@ -16,23 +16,23 @@ import 'nprogress/nprogress.css';
 import { getToken } from '@/utils/auth';
 import { hasPermission } from '@/utils/index';
 
-function genDynamicRouterMap(to, from, next) {
-  store.dispatch('GetUserInfo').then((res) => {
-    const roles = res.data.role;
-    // 生成可访问的路由表
-    store.dispatch('GenerateRoutes', { roles }).then(() => {
-      // 动态添加可访问路由
-      router.addRoutes(store.getters.addRoutes);
-      // hack,确保addRoutes文成
-      next({ ...to });
-    });
-  }).catch(() => {
-    // 重新定向到登录页面
-    store.dispatch('FedLogOut').then(() => {
-      next({ path: '/login' });
-    });
-  });
-}
+// function genDynamicRouterMap(store, to, from, next) {
+//   store.dispatch('GetUserInfo').then((res) => {
+//     const roles = res.data.role;
+//     // 生成可访问的路由表
+//     store.dispatch('GenerateRoutes', { roles }).then(() => {
+//       // 动态添加可访问路由
+//       router.addRoutes(store.getters.addRoutes);
+//       // hack,确保addRoutes文成
+//       next({ ...to });
+//     });
+//   }).catch(() => {
+//     // 重新定向到登录页面
+//     store.dispatch('FedLogOut').then(() => {
+//       next({ path: '/login' });
+//     });
+//   });
+// }
 
 // 免登陆白名单
 const WhiteList = ['/login', 'authredirect'];
@@ -49,11 +49,26 @@ router.beforeEach((to, from, next) => {
       // 判断当前登录用户是否获得用户信息
       if (store.getters.roles.length === 0) {
         // 需要拉取用户信息，用于生成路由表
-        genDynamicRouterMap(to, from, next);
+        // genDynamicRouterMap(store, to, from, next);
+        store.dispatch('GetUserInfo').then((res) => {
+          const roles = res.data.role;
+          // 生成可访问的路由表
+          store.dispatch('GenerateRoutes', { roles }).then(() => {
+            // 动态添加可访问路由
+            router.addRoutes(store.getters.addRouters);
+            // hack,确保addRoutes文成
+            next({ ...to });
+          });
+        }).catch(() => {
+          // 重新定向到登录页面
+          store.dispatch('FedLogOut').then(() => {
+            next({ path: '/login' });
+          });
+        });
       } else {
         // 根据用户权限信息，判断目标路由是否有权访问，如果无权重定向401
         // 如果有权限，并且没有动态改变权限的需求，则直接加载目标路由
-        if (hasPermission(store.getters.roles, to.meta.roles)) {
+        if (hasPermission(store.getters.roles, to.meta.role)) {
           next();
         } else {
           next({ path: '/401', query: { noGoBak: true }});

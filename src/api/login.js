@@ -1,6 +1,6 @@
 import fetch from '@/utils/fetch';
 
-export function login(username, password) {
+export function loginByUsername(username, password) {
   return fetch({
     url: '/login/login',
     method: 'post',
@@ -11,7 +11,7 @@ export function login(username, password) {
   });
 }
 
-export function getInfo(token) {
+export function getUserInfo(token) {
   return fetch({
     url: '/user/info',
     method: 'get',
