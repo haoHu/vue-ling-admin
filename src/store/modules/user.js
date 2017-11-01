@@ -1,4 +1,5 @@
-import { loginByUsername, logout, getUserInfo } from '@/api/login';
+// import { loginByUsername, logout, getUserInfo } from '@/api/login';
+import { loginByEmail, logout, getUserInfo } from '@/api/login';
 import { getToken, setToken, removeToken } from '@/utils/auth';
 
 const user = {
@@ -34,16 +35,28 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles;
+    },
+    SET_PERMISSIONS: (state, permissions) => {
+      state.permissions = permissions;
     }
   },
 
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.username.trim();
+      // const username = userInfo.username.trim();
+      const email = userInfo.email.trim();
       return new Promise((resolve, reject) => {
-        loginByUsername(username, userInfo.password).then(response => {
-          const data = response.data;
+        // loginByUsername(username, userInfo.password).then(response => {
+        //   const data = response.data;
+        //   setToken(data.token);
+        //   commit('SET_TOKEN', data.token);
+        //   resolve();
+        // }).catch(error => {
+        //   reject(error);
+        // });
+        loginByEmail(email, userInfo.password).then(response => {
+          const data = response.data.data;
           setToken(data.token);
           commit('SET_TOKEN', data.token);
           resolve();
@@ -57,8 +70,9 @@ const user = {
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then((response) => {
-          const data = response.data;
+          const data = response.data.data;
           commit('SET_ROLES', data.role);
+          commit('SET_PERMISSIONS', data.permissions);
           commit('SET_NAME', data.name);
           commit('SET_AVATAR', data.avatar);
           commit('SET_INTRODUCTION', data.introduction);
@@ -89,6 +103,7 @@ const user = {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '');
           commit('SET_ROLES', []);
+          commit('SET_PERMISSIONS', []);
           removeToken();
           resolve();
         }).catch(error => {
@@ -112,8 +127,9 @@ const user = {
         commit('SET_TOKEN', role);
         setToken(role);
         getUserInfo(role).then(response => {
-          const data = response.data;
+          const data = response.data.data;
           commit('SET_ROLES', data.role);
+          commit('SET_PERMISSIONS', data.permissions);
           commit('SET_NAME', data.name);
           commit('SET_AVATAR', data.avatar);
           commit('SET_INTRODUCTION', data.introduction);

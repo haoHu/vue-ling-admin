@@ -3,11 +3,11 @@
     <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px"
       class="card-box login-form">
       <h3 class="title">vue-element-admin</h3>
-      <el-form-item prop="username">
+      <el-form-item prop="email">
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="yonghuming" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on" placeholder="Email" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
@@ -22,7 +22,7 @@
         </el-button>
       </el-form-item>
       <div class='tips'>
-        <span style="margin-right:20px;">username: admin</span>
+        <span style="margin-right:20px;">Email: admin@ling.ai</span>
         </span> password: admin</span>
       </div>
     </el-form>
@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate';
+import { isvalidEmail } from '@/utils/validate';
 
 export default {
   name: 'login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+    const validateEmail = (rule, value, callback) => {
+      if (!isvalidEmail(value)) {
         callback(new Error('请输入正确的用户名'));
       } else {
         callback();
@@ -51,11 +51,11 @@ export default {
     };
     return {
       loginForm: {
-        username: 'admin',
-        password: 'admin'
+        email: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false

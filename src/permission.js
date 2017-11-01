@@ -47,13 +47,15 @@ router.beforeEach((to, from, next) => {
       NProgress.done();
     } else {
       // 判断当前登录用户是否获得用户信息
+      console.log(store.getters.roles);
       if (store.getters.roles.length === 0) {
         // 需要拉取用户信息，用于生成路由表
         // genDynamicRouterMap(store, to, from, next);
         store.dispatch('GetUserInfo').then((res) => {
-          const roles = res.data.role;
+          const roles = res.data.data.role;
+          const permissions = res.data.data.permissions;
           // 生成可访问的路由表
-          store.dispatch('GenerateRoutes', { roles }).then(() => {
+          store.dispatch('GenerateRoutes', { roles, permissions }).then(() => {
             // 动态添加可访问路由
             router.addRoutes(store.getters.addRouters);
             // hack,确保addRoutes文成

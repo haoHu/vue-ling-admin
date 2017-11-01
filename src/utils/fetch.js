@@ -33,9 +33,10 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data;
-    const code = res.code;
-    // code状态码为非200时，根据具体业务进行修改
-    if (code !== 20000) {
+    const code = res.errno;
+    console.log(res);
+    // code状态码为非0时，根据具体业务进行修改
+    if (code !== 0) {
       Message({
         message: res.data,
         type: 'error',
