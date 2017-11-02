@@ -1,31 +1,39 @@
 <template>
   <section class="login-main">
-    <!-- <el-container>
-      <el-header>
-        <el-menu :default-active="activeIndex" class="login-menu" mode="horizontal" @select="selectItem">
-          <el-menu-item index="1">登录</el-menu-item>
-          <el-menu-item index="2">注册</el-menu-item>
-        </el-menu>
-      </el-header>
-      <el-main>
-        <transition name="fade" mode="out-in">
-          <router-view :key="key"></router-view>
-        </transition>
-      </el-main>
-    </el-container> -->
-    <el-container>
+    <div class="login-header">
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <div class="grid-content">
+            <div class="logo">
+              <router-link to="/">Ling</router-link>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="4" :offset="16">
+          <div class="grid-content">
+            <login-menu></login-menu>
+          </div>
+        </el-col>
+      </el-row>
+
+    </div>
+    <div class="login-body">
       <transition name="fade" mode="out-in">
         <router-view :key="key"></router-view>
       </transition>
-    </el-container>
+    </div>
 
   </section>
 </template>
 
 <script>
 import {} from 'vue';
+import LoginMenu from '@/components/LoginMenu';
 export default {
   name: 'LoginMain',
+  components: {
+    LoginMenu
+  },
   data() {
     return {
       activeIndex: 1
@@ -42,3 +50,33 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+@headerBg: #eef1f6;
+@headerHeight: 60px;
+.login-main {
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+
+  .login-header {
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    width: 100vw;
+    height: @headerHeight;
+    background-color: @headerBg;
+
+    .logo > a {
+      font-size: 2em;
+      display: block;
+      padding: 10px 20px;
+      line-height: 1.5;
+      vertical-align: middle;
+      text-decoration: none;
+      color: #111;
+    }
+  }
+}
+</style>
+

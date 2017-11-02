@@ -1,33 +1,169 @@
 <template>
-  <div>
-    <el-container>
-      <el-header>
-    <h1>这里是重置密码页面</h1>
-    </el-header>
-    <el-main>
-      <el-menu :default-active="activeIndex" class="login-menu" mode="horizontal" @select="selectItem">
-        <el-menu-item index="1">登录</el-menu-item>
-        <el-menu-item index="2">注册</el-menu-item>
-      </el-menu>
-    </el-main>
-
-    </el-container>
+  <div class="resetpwd-container">
+    <el-form autoComplete="on" :model="resetPwdForm" :rules="formRules" ref="resetPwdForm" label-position="left" label-width="0px"
+      class="card-box login-form">
+      <h3 class="title">重置密码</h3>
+      <el-form-item prop="email">
+        <span class="svg-container svg-container_login">
+          <icon-svg icon-class="yonghuming" />
+        </span>
+        <el-input name="email" type="text" v-model="resetPwdForm.email" autoComplete="on" placeholder="邮箱" ></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleReset">
+          发送邮件
+        </el-button>
+      </el-form-item>
+    </el-form>
   </div>
 
 
 </template>
 
 <script>
+import { isvalidEmail } from '@/utils/validate';
+import { resetpwd } from '@/api/login';
+
 export default {
+  name: 'resetpwd',
   data() {
+    const validateEmail = (rule, value, callback) => {
+      if (!isvalidEmail(value)) {
+        callback(new Error('请输入正确的邮箱'));
+      } else {
+        callback();
+      }
+    };
     return {
-      activeIndex: '1'
+      resetPwdForm: {
+        email: ''
+      },
+      formRules: {
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }]
+      },
+      loading: false
     };
   },
   methods: {
-    selectItem(key, keyPath) {
-      console.log(key, keyPath);
+    handleReset() {
+      this.$refs.resetPwdForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+
+          resetpwd(this.resetPwdForm).then(response => {
+            const code = response.data.errno.toString();
+            const msg = response.data.errmsg;
+            this.loading = false;
+            this.$message({
+              message: msg,
+              type: code === '0' ? 'success' : 'error',
+              showClose: true,
+              duration: 3000
+            });
+          }).catch((err) => {
+            this.loading = false;
+            // this.$message({
+            //   message: err,
+            //   type: 'error',
+            //   showClose: true,
+            //   duration: 3000
+            // });
+          });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     }
   }
 };
 </script>
+
+<style rel="stylesheet/less" lang="less">
+@import "../../styles/mixins/mixins.less";
+@loginBg: #2d3a4b;
+@dark_gray: #889aa4;
+@light_gray: #eee;
+.resetpwd-container {
+  .relative();
+  height: 100vh;
+  width: 100vw;
+  .borderBox();
+  background-color: @loginBg;
+  .login-form {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 30vw;
+    margin: 25vh auto;
+
+    > .title {
+      margin: 0 auto 1rem;
+      font-size: 3rem;
+      color: @dark_gray;
+      font-weight: 700;
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  input {
+    background: transparent;
+    -webkit-appearance: none;
+    border: 0;
+    border-radius: 0px;
+    padding: 12px 5px 12px 15px;
+    color: @light_gray;
+    height: 47px;
+
+  }
+  .el-input {
+    display: inline-block;
+    .borderBox();
+    height: 47px;
+    width: 100%;
+    padding-left: 30px;
+  }
+  .svg-container {
+    position: absolute;
+    top: 0;
+    padding: 6px 5px 6px 15px;
+    color: @dark_gray;
+    vertical-align: middle;
+    width: 30px;
+    display: inline-block;
+    font-size: 20px;
+    .svg-icon {
+      width: 1em;
+      height: 1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+  }
+  .el-form-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: #454545;
+  }
+  .show-pwd {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    font-size: 16px;
+    color: @dark_gray;
+    cursor: pointer;
+  }
+  .tips {
+    > a {
+      color: @light_gray;
+      text-decoration: none;
+    }
+  }
+}
+</style>
+

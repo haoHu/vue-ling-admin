@@ -127,5 +127,12 @@ export default {
       errno: 0,
       errmsg: 'success'
     };
+  },
+  resetEmail: config => {
+    const { email } = JSON.parse(config.body);
+    return {
+      errno: 0,
+      errmsg: `已经把重置密码连接发送到邮箱:${email}`
+    };
   }
 };

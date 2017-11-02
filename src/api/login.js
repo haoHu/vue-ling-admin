@@ -53,16 +53,16 @@ export function logout() {
 }
 
 /**
- * 重置登录密码
+ * 发送重置登录密码邮件
  * @param {Object} params
- * params = { _token, emial }
+ * params = { _token, email }
  */
 export function resetpwd(params) {
   const { _token, email } = params;
   return fetch({
-    url: '/resetpwd',
+    url: '/reset/email',
     method: 'post',
-    params: {
+    data: {
       _token,
       email
     }

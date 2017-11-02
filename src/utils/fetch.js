@@ -38,7 +38,7 @@ service.interceptors.response.use(
     // code状态码为非0时，根据具体业务进行修改
     if (code !== 0) {
       Message({
-        message: res.data,
+        message: res.errmsg,
         type: 'error',
         duration: MessageDuration
       });
@@ -63,11 +63,11 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error);
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: MessageDuration
-    });
+    // Message({
+    //   message: error.message,
+    //   type: 'error',
+    //   duration: MessageDuration
+    // });
     return Promise.reject(error);
   }
 );

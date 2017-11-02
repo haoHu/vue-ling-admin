@@ -11,5 +11,6 @@ Mock.setup({
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByEmail);
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout);
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo);
+Mock.mock(/\/reset\/email/, 'post', loginAPI.resetEmail);
 
 export default Mock;
