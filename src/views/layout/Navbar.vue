@@ -49,7 +49,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" scoped rel="stylesheet/less">
+
   .navbar {
     height: 50px;
     line-height: 50px;

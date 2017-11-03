@@ -26,8 +26,12 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" scoped  rel="stylesheet/less">
   @import "../../styles/mixins/mixins.less";
+  @expandSideBarWidth: 1.8rem;
+  @hideSidebarWidth : 0.36rem;
+  @navbarHeight: 0.5rem;
+
   .app-wrapper {
     .clearfix();
     position: relative;
@@ -35,16 +39,20 @@ export default {
     width: 100%;
     &.hideSidebar {
       .sidebar-container {
-        width: 0.36rem;
+        width: @hideSidebarWidth;
         overflow: inherit;
       }
       .main-container {
-        margin-left: 0.36rem;
+        margin-left: @hideSidebarWidth;
+
+        .navbar {
+          left: @hideSidebarWidth;
+        }
       }
     }
     .sidebar-container {
       transition: width 0.28s ease-out;
-      width: 1.8rem;
+      width: @expandSideBarWidth;
       height: 100%;
       position: fixed;
       top: 0;
@@ -56,9 +64,17 @@ export default {
       .scrollBar();
     }
     .main-container {
+      .relative();
       min-height: 100%;
+      padding-top: @navbarHeight;
       transition: margin-left 0.28s ease-out;
-      margin-left: 1.8rem;
+      margin-left: @expandSideBarWidth;
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: @expandSideBarWidth;
+        right: 0;
+      }
     }
   }
 </style>
