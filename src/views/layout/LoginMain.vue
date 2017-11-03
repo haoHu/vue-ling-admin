@@ -52,31 +52,43 @@ export default {
 </script>
 
 <style lang="less" scoped rel="stylesheet/less" >
+@import '../../styles/mixins/mixins.less';
 @headerBg: #eef1f6;
-@headerHeight: 60px;
+@headerHeight: 0.6rem;
+@bodyBg: #2d3a4b;
+@logoSize: 0.3rem;
+@logoColor: #111;
 .login-main {
-  height: 100vh;
-  width: 100vw;
-  box-sizing: border-box;
-
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  padding: @headerHeight 0 0 0;
+  background: @bodyBg;
+  overflow: auto;
+  .scrollBar();
   .login-header {
     position: fixed;
-    top: 0;
     z-index: 10;
-    width: 100vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: @headerBg;
+  }
+  .login-header .logo {
+    display: block;
     height: @headerHeight;
-    background-color: @headerBg;
-
-    .logo > a {
-      font-size: 2em;
+    > a {
       display: block;
-      padding: 10px 20px;
-      line-height: 1.5;
-      vertical-align: middle;
-      text-decoration: none;
-      color: #111;
+      padding: 0.15rem;
+      font-size: @logoSize;
+      color: @logoColor;
     }
   }
 }
+
+
 </style>
 

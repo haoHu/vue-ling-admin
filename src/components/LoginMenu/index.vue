@@ -46,10 +46,12 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" rel="stylesheet/less" scoped>
 .el-menu-item {
+  padding: 0;
   > a {
     display: block;
+    padding: 0 0.2rem;
     text-decoration: none;
   }
 }
