@@ -1,5 +1,5 @@
 <template>
-  <el-menu mode="vertical" theme="dark" unique-opened :default-active="$route.path" :collapse="isCollapse">
+  <el-menu mode="vertical" theme="dark" unique-opened :default-active="$route.path" :collapse="isCollapse" @open="handleOpen" @select="handleSelect" menu-trigger="click">
     <sidebar-item :routes="permission_routers"></sidebar-item>
   </el-menu>
 </template>
@@ -17,12 +17,17 @@ export default {
     isCollapse() {
       return !this.sidebar.opened;
     }
+  },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log('select');
+      console.log(key, keyPath);
+    },
+    handleOpen(key, keyPath) {
+      console.log('open');
+      console.log(key, keyPath);
+    }
   }
 };
 </script>
 
-<style lang="less" scoped>
-.el-menu {
-  min-height: 100%;
-}
-</style>

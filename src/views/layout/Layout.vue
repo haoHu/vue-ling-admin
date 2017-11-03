@@ -1,8 +1,6 @@
 <template>
   <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
-    <div class="sidebar-wrapper">
-      <sidebar class="sidebar-container"></sidebar>
-    </div>
+    <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar></navbar>
       <app-main></app-main>
@@ -36,46 +34,31 @@ export default {
     height: 100%;
     width: 100%;
     &.hideSidebar {
-      // 隐藏sidebar
-      .sidebar-wrapper {
-        transform: translate(-140px, 0);
-        .sidebar-container {
-          transform: translate(132px, 0);
-        }
-        &:hover {
-          transform: translate(0, 0);
-          .sidebar-container {
-            transform: translate(0, 0);
-          }
-        }
+      .sidebar-container {
+        width: 0.36rem;
+        overflow: inherit;
       }
       .main-container {
-        margin-left: 40px;
+        margin-left: 0.36rem;
       }
     }
-    .sidebar-wrapper {
-      width : 180px;
+    .sidebar-container {
+      transition: width 0.28s ease-out;
+      width: 1.8rem;
+      height: 100%;
       position: fixed;
       top: 0;
       bottom: 0;
       left: 0;
       z-index: 1001;
-      overflow: hidden;
-      transition: all .28s ease-out;
-    }
-    .sidebar-container {
-      transition: all .28s ease-out;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: -17px;
-      overflow-y: scroll;
+      overflow-y: auto;
+      // &::-webkit-scrollbar {display: none}
+      .scrollBar();
     }
     .main-container {
       min-height: 100%;
-      transition: all .28s ease-out;
-      margin-left: 180px;
+      transition: margin-left 0.28s ease-out;
+      margin-left: 1.8rem;
     }
   }
 </style>

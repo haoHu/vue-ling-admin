@@ -1,5 +1,104 @@
-@bodyBg : #f5f8fa;
-body {
-  background-color: @bodyBg;
+@import './mixins/mixins.less';
+@import './sidebar.less';
+
+/*统一html元素盒模型*/
+html {
+  box-sizing: border-box;
 }
+
+/*所有元素集成html盒模型*/
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+/*默认label*/
+label {
+  font-weight: 700;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+/*统一内容padding*/
+.padding-content {
+  padding: 4px 0;
+}
+
+/*统一a标签*/
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+// 左右浮动
+.fr {
+  float : right;
+}
+
+.fl {
+  float: left;
+}
+
+// 动画效果
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .2s ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+// svg icon默认样式
+.svg-icon {
+  .box-size(0.18rem);
+  fill: currentColor;
+  overflow: hidden;
+}
+
+// 统一链接类型样式
+.link-type,
+.link-type:focus {
+  color: #337ab7;
+  cursor: pointer;
+  &:hover {
+    color: rgb(32, 160, 255);
+  }
+}
+
+.input-label {
+  font-size: 0.14rem;
+  color: #48576a;
+  line-height: 1;
+  padding: 0.1rem 0.05rem 0.1rem 0;
+}
+
+.clearfix {
+  .clearfix();
+}
+
+
+
+
+
+
 

@@ -6,6 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Admin System</title>
+  <script type="text/javascript">
+  // TODO 移动端适配
+  // (function(doc, win) {
+  //   var documentElement = doc.documentElement;
+  //   var resizeEvt = 'orientattionchange' in win ? 'orientattionchange' : 'resize';
+  //   var recalc = function() {
+  //     var clientWidth = documentElement.clientWidth;
+  //     if (!clientWidth) return;
+  //     documentElement.style.fontSize = 50 * (clientWidth / 375) + 'px';
+  //   };
+  //   if (!doc.addEventListener) return;
+  //   win.addEventListener(resizeEvt, recalc, false);
+  //   doc.addEventListener('DOMContentLoaded', recalc, false);
+  // })(document, window);
+  // 当前只支持桌面端，统一基准fontSize为100px（双倍屏宽）
+  (function(doc, win) {
+    var documentElement = doc.documentElement;
+    var resizeEvt = 'orientattionchange' in win ? 'orientattionchange' : 'resize';
+    var recalc = function() {
+      documentElement.style.fontSize = 100 + 'px';
+    };
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+  })(document, window);
+  </script>
 </head>
 <body>
   <div id="app"></div>

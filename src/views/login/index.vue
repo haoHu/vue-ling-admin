@@ -5,7 +5,7 @@
       <h3 class="title">登录系统</h3>
       <el-form-item prop="email">
         <span class="svg-container svg-container_login">
-          <icon-svg icon-class="yonghuming" />
+          <icon-svg icon-class="email" />
         </span>
         <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on" placeholder="邮箱" ></el-input>
       </el-form-item>
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     showPwdIcon() {
-      return this.pwdType === 'password' ? 'eye' : 'yanjing';
+      return this.pwdType === 'password' ? 'yanjing' : 'eye';
     },
     showPwd() {
       if (this.pwdType === 'password') {

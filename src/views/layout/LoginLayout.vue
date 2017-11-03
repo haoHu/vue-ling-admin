@@ -14,3 +14,10 @@ export default {
   }
 };
 </script>
+
+<style lang="less" rel="stylesheet/less" scoped>
+.login-wrapper {
+  background-color: #2d3a4b;
+}
+</style>
+

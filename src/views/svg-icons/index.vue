@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     generateIconCode(symbol) {
-      return '<icon-svg :icon-class="${symbol}" />';
+      return `<icon-svg :icon-class="${symbol}" />`;
     }
     // handleClipboard(text, event) {
     //   clipboard(text, event);

@@ -62,6 +62,7 @@ export default {
             });
           }).catch((err) => {
             this.loading = false;
+            console.log(err);
             // this.$message({
             //   message: err,
             //   type: 'error',

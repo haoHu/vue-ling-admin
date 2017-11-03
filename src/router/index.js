@@ -98,7 +98,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/picture_books/idnex',
     name: '内容管理',
-    // icon: 'people',
+    icon: 'content',
     // meta: { role: ['admin'], permissions: ['picture-books-read'] },
     children: [
       {
@@ -130,7 +130,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/oss/pics',
     name: '文件管理',
-    // icon: 'people',
+    icon: 'files',
     // meta: { role: ['admin'] },
     children: [
       {
@@ -149,7 +149,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/op/banners',
     name: '运营管理',
-    // icon: 'people',
+    icon: 'operation',
     // meta: { role: ['admin'] },
     children: [
       {
@@ -190,7 +190,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/sys/logs',
     name: '系统管理',
-    // icon: 'people',
+    icon: 'system',
     // meta: { role: ['admin'] },
     children: [
       {
@@ -227,7 +227,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/users/index',
     name: '用户管理',
-    // icon: 'people',
+    icon: 'people',
     // meta: { role: ['admin'] },
     children: [
       {
@@ -250,7 +250,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/devices/ota/index',
     name: '设备管理',
-    // icon: 'people',
+    icon: 'robot',
     // meta: { role: ['admin'] },
     children: [
       { path: 'index', group: 'OTA管理', component: _import('ota/index'), name: 'OTA列表' },

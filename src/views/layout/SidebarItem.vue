@@ -55,13 +55,3 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-// .svg-icon {
-//   margin-right: 10px;
-// }
-// .hideSidebar .menu-indent {
-//   display: block;
-//   text-indent: 10px;
-// }
-</style>
-

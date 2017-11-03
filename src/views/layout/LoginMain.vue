@@ -51,7 +51,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" scoped rel="stylesheet/less" >
 @headerBg: #eef1f6;
 @headerHeight: 60px;
 .login-main {

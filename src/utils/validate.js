@@ -33,3 +33,8 @@ export function validateAlphabets(str) {
   const reg = /^[A-Za-z]+$/;
   return reg.test(str);
 }
+
+// 是空字符串
+export function isEmptyStr(str) {
+  return str.length === 0;
+}
