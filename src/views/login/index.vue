@@ -104,7 +104,6 @@ export default {
 .login-container {
   .relative();
   width: 100vw;
-  .borderBox();
   .login-form {
     .relative();
     width: 30vw;

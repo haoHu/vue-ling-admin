@@ -5,7 +5,7 @@
       <h3 class="title">重置密码</h3>
       <el-form-item prop="email">
         <span class="svg-container svg-container_login">
-          <icon-svg icon-class="yonghuming" />
+          <icon-svg icon-class="email" />
         </span>
         <el-input name="email" type="text" v-model="resetPwdForm.email" autoComplete="on" placeholder="邮箱" ></el-input>
       </el-form-item>
@@ -82,25 +82,18 @@ export default {
 
 <style rel="stylesheet/less" lang="less">
 @import "../../styles/mixins/mixins.less";
-@loginBg: #2d3a4b;
 @dark_gray: #889aa4;
 @light_gray: #eee;
 .resetpwd-container {
   .relative();
-  height: 100vh;
   width: 100vw;
-  .borderBox();
-  background-color: @loginBg;
   .login-form {
-    position: absolute;
-    left: 0;
-    right: 0;
+    .relative();
     width: 30vw;
-    margin: 25vh auto;
-
+    margin: 0 auto;
     > .title {
-      margin: 0 auto 1rem;
-      font-size: 3rem;
+      margin: 0.5rem auto 0.1rem;
+      font-size: 0.3rem;
       color: @dark_gray;
       font-weight: 700;
       text-align: center;

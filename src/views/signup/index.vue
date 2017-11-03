@@ -1,5 +1,5 @@
 <template>
-  <div class="signup-ccontainer">
+  <div class="signup-container">
     <el-form autoComplete="off" :model="formModel" :rules="formRules" ref="signupForm" label-position="right" label-width="100px" class="signup-form">
       <h3 class="title">注册</h3>
       <el-form-item label="用户名">
@@ -99,25 +99,20 @@ export default {
 
 <style lang="less" rel="stylesheet/less" scoped>
 @import "../../styles/mixins/mixins.less";
-@loginBg: #2d3a4b;
+
 @dark_gray: #889aa4;
 @light_gray: #eee;
-.signup-ccontainer {
+.signup-container {
   .relative();
-  height: 100vh;
   width: 100vw;
-  .borderBox();
-  background-color: @loginBg;
-  .signup-form {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 30vw;
-    margin: 25vh auto;
 
+  .signup-form {
+    .relative();
+    width: 30vw;
+    margin: 0 auto;
     > .title {
-      margin: 0 auto 1rem;
-      font-size: 3rem;
+      margin: 0.5rem auto 0.1rem;
+      font-size: 0.3rem;
       color: @dark_gray;
       font-weight: 700;
       text-align: center;
@@ -135,15 +130,12 @@ export default {
     border-radius: 0px;
     padding: 12px 5px 12px 15px;
     color: @light_gray;
-    height: 47px;
+    height: 0.47rem;
 
   }
   .el-input {
     display: inline-block;
-    .borderBox();
-    height: 47px;
     width: 100%;
-    padding-left: 30px;
   }
   .svg-container {
     position: absolute;
@@ -168,9 +160,8 @@ export default {
     // background: rgba(0, 0, 0, 0.1);
     background: transparent;
     border-radius: 5px;
-    // color: #454545;
-    color: #fff!important;
-    label {
+    color:#fff!important;
+    > label {
       color: #fff!important;
     }
   }
