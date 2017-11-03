@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <icon-svg icon-class="mima"></icon-svg>
+          <icon-svg icon-class="password"></icon-svg>
         </span>
         <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
           placeholder="密码"></el-input>
@@ -99,31 +99,26 @@ export default {
 
 <style rel="stylesheet/less" lang="less">
 @import "../../styles/mixins/mixins.less";
-@loginBg: #2d3a4b;
 @dark_gray: #889aa4;
 @light_gray: #eee;
 .login-container {
   .relative();
-  height: 100vh;
   width: 100vw;
   .borderBox();
-  background-color: @loginBg;
   .login-form {
-    position: absolute;
-    left: 0;
-    right: 0;
+    .relative();
     width: 30vw;
-    margin: 25vh auto;
-
+    margin: 0 auto;
     > .title {
-      margin: 0 auto 1rem;
-      font-size: 3rem;
+      margin: 0.5rem auto 0.1rem;
+      font-size: 0.3rem;
       color: @dark_gray;
       font-weight: 700;
       text-align: center;
       vertical-align: middle;
     }
   }
+
   input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
     -webkit-text-fill-color: #fff !important;
