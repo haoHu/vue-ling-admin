@@ -74,6 +74,8 @@ export default {
         top: 0;
         left: @expandSideBarWidth;
         right: 0;
+        height: @navbarHeight;
+        line-height: @navbarHeight;
       }
     }
   }
