@@ -53,18 +53,27 @@ export function logout() {
 }
 
 /**
- * 发送重置登录密码邮件
+ * 重置登录密码
  * @param {Object} params
- * params = { _token, email }
+ * params = { email }
  */
 export function resetpwd(params) {
-  const { _token, email } = params;
+  const { email, captcha, password } = params;
   return fetch({
-    url: '/reset/email',
+    url: '/reset/pwd',
     method: 'post',
     data: {
-      _token,
-      email
+      email,
+      captcha,
+      password
     }
+  });
+}
+
+export function sendCaptchaEmail(params) {
+  return fetch({
+    url: '/captcha',
+    method: 'post',
+    data: params
   });
 }

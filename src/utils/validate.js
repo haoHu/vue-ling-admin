@@ -36,5 +36,5 @@ export function validateAlphabets(str) {
 
 // 是空字符串
 export function isEmptyStr(str) {
-  return str.length === 0;
+  return str === undefined || str === null || str.length === 0;
 }

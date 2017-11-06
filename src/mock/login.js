@@ -128,11 +128,19 @@ export default {
       errmsg: 'success'
     };
   },
-  resetEmail: config => {
+  resetPwd: config => {
     const { email } = JSON.parse(config.body);
     return {
       errno: 0,
       errmsg: `已经把重置密码连接发送到邮箱:${email}`
     };
+  },
+  captchaEmail: config => {
+    const { email } = JSON.parse(config.body);
+    return {
+      errno: 0,
+      errmsg: '验证码已经发送到你的邮箱' + email + '，请查收'
+    };
   }
+
 };

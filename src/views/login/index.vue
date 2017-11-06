@@ -15,7 +15,6 @@
         </span>
         <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
           placeholder="密码"></el-input>
-        <!-- <span class='show-pwd' @click='showPwd'><icon-svg icon-class="yanjing" /></span> -->
         <span class="svg-container show-pwd" @click='showPwd'>
           <icon-svg :icon-class="showPwdIcon()" />
         </span>
@@ -68,7 +67,7 @@ export default {
   },
   methods: {
     showPwdIcon() {
-      return this.pwdType === 'password' ? 'yanjing' : 'eye';
+      return this.pwdType === 'password' ? 'show-pwd' : 'eye';
     },
     showPwd() {
       if (this.pwdType === 'password') {

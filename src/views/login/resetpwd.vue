@@ -1,17 +1,47 @@
 <template>
   <div class="resetpwd-container">
-    <el-form autoComplete="on" :model="resetPwdForm" :rules="formRules" ref="resetPwdForm" label-position="left" label-width="0px"
+    <el-form autoComplete="on" :model="formModel" :rules="formRules" ref="formModel" label-position="left" label-width="0px"
       class="card-box login-form">
       <h3 class="title">重置密码</h3>
       <el-form-item prop="email">
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="email" />
         </span>
-        <el-input name="email" type="text" v-model="resetPwdForm.email" autoComplete="on" placeholder="邮箱" ></el-input>
+        <el-input name="email" type="text" v-model="formModel.email" autoComplete="on" placeholder="邮箱" ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleReset">
-          发送邮件
+        <el-col :span="16">
+          <span class="svg-container svg-container_login">
+            <icon-svg icon-class="captcha" />
+          </span>
+          <el-input name="captcha" type="text" v-model="formModel.captcha" placeholder="验证码"></el-input>
+        </el-col>
+        <el-col :span="1">&nbsp;</el-col>
+        <el-col :span="7">
+          <el-button @click="getCaptcha" :disabled="captchaBtn.disabled">{{captchaBtn.label}}</el-button>
+        </el-col>
+      </el-form-item>
+      <el-form-item prop="password">
+        <span class="svg-container svg-container_login">
+          <icon-svg icon-class="password" />
+        </span>
+        <el-input name="password" :type="pwdType" v-model="formModel.password" autoComplete="on" placeholder="密码" ></el-input>
+        <span class="svg-container show-pwd" @click='showPwd'>
+          <icon-svg :icon-class="showPwdIcon()" />
+        </span>
+      </el-form-item>
+      <el-form-item prop="password_confirm">
+        <span class="svg-container svg-container_login">
+          <icon-svg icon-class="password-confirm" />
+        </span>
+        <el-input name="password_confirm" :type="pwdType" v-model="formModel.password_confirm" autoComplete="on" placeholder="确认密码" ></el-input>
+        <span class="svg-container show-pwd" @click='showPwd'>
+          <icon-svg :icon-class="showPwdIcon()" />
+        </span>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleResetPwd">
+          重置密码
         </el-button>
       </el-form-item>
     </el-form>
@@ -21,36 +51,94 @@
 </template>
 
 <script>
-import { isvalidEmail } from '@/utils/validate';
-import { resetpwd } from '@/api/login';
-
+import { isvalidEmail, isEmptyStr } from '@/utils/validate';
+import { resetpwd, sendCaptchaEmail } from '@/api/login';
+const OneMinuteCounter = 60;
+function handleCounter() {
+  if (this.captchaBtn.counter === 1) {
+    clearTimeout(this.captchaBtn.timer);
+    this.captchaBtn.label = '获取验证码';
+    this.captchaBtn.counter = OneMinuteCounter;
+    this.captchaBtn.timer = null;
+    this.captchaBtn.disabled = false;
+    return;
+  }
+  this.captchaBtn.counter--;
+  this.captchaBtn.label = '获取验证码(' + this.captchaBtn.counter + 's)';
+  this.captchaBtn.timer = setTimeout(handleCounter.bind(this), 1000);
+}
 export default {
   name: 'resetpwd',
   data() {
     const validateEmail = (rule, value, callback) => {
       if (!isvalidEmail(value)) {
-        callback(new Error('请输入正确的邮箱'));
+        callback(new Error('请填写正确格式邮箱'));
       } else {
         callback();
       }
     };
+    const validateCaptcha = (rule, value, callback) => {
+      if (isEmptyStr(value)) {
+        callback(new Error('请填写校验码'));
+      } else {
+        callback();
+      }
+    };
+    const validatePass = (rule, value, callback) => {
+      if (isEmptyStr(value)) {
+        callback(new Error('请填写密码'));
+      } else {
+        callback();
+      }
+    };
+    const validatePassConfirm = (rule, value, callback) => {
+      if (value !== this.formModel.password) {
+        callback(new Error('两次填写密码不一致，请检查'));
+      } else {
+        callback();
+      }
+    };
+    const FormRules = {
+      email: [{ required: true, trigger: 'blur', validator: validateEmail }],
+      captcha: [{ required: true, trigger: 'blur', validator: validateCaptcha }],
+      password: [{ required: true, trigger: 'blur', validator: validatePass }],
+      password_confirm: [{ required: true, trigger: 'blur', validator: validatePassConfirm }]
+    };
     return {
-      resetPwdForm: {
-        email: ''
+      formModel: {
+        email: '',
+        captcha: '',
+        password: '',
+        password_confirm: ''
       },
-      formRules: {
-        email: [{ required: true, trigger: 'blur', validator: validateEmail }]
-      },
-      loading: false
+      formRules: FormRules,
+      pwdType: 'password',
+      loading: false,
+      captchaBtn: {
+        label: '获取验证码',
+        disabled: false,
+        counter: OneMinuteCounter,
+        timer: null
+      }
     };
   },
   methods: {
-    handleReset() {
-      this.$refs.resetPwdForm.validate(valid => {
+    showPwdIcon() {
+      return this.pwdType === 'password' ? 'show-pwd' : 'eye';
+    },
+    showPwd() {
+      if (this.pwdType === 'password') {
+        this.pwdType = 'text';
+      } else {
+        this.pwdType = 'password';
+      }
+    },
+    handleResetPwd() {
+      this.$refs.formModel.validate(valid => {
         if (valid) {
           this.loading = true;
 
-          resetpwd(this.resetPwdForm).then(response => {
+          resetpwd(this.formModel).then(response => {
             const code = response.data.errno.toString();
             const msg = response.data.errmsg;
             this.loading = false;
@@ -75,6 +163,43 @@ export default {
           return false;
         }
       });
+    },
+    getCaptcha() {
+      if (isEmptyStr(this.formModel.email)) {
+        this.$message({
+          message: '请先输入有效邮箱',
+          type: 'error',
+          showClose: true,
+          duration: 3000
+        });
+        return;
+      }
+      this.loading = true;
+      // 屏蔽连续点击获取验证码
+      this.captchaBtn.disabled = true;
+      // 发送请求获取验证码
+      sendCaptchaEmail(this.formModel).then(response => {
+        const code = response.data.errno.toString();
+        const msg = response.data.errmsg;
+        this.loading = false;
+        this.$message({
+          message: msg,
+          type: code === '0' ? 'success' : 'error',
+          showClose: true,
+          duration: 3000
+        });
+      }).catch((err) => {
+        this.loading = false;
+        console.log(err);
+        // this.$message({
+        //   message: err,
+        //   type: 'error',
+        //   showClose: true,
+        //   duration: 3000
+        // });
+      });
+      // 设定倒计时1分钟之后恢复可点击状态
+      handleCounter.bind(this)();
     }
   }
 };
@@ -109,22 +234,22 @@ export default {
     -webkit-appearance: none;
     border: 0;
     border-radius: 0px;
-    padding: 12px 5px 12px 15px;
+    padding: 0.12rem 0.05rem 0.12rem 0.15rem;
     color: @light_gray;
-    height: 47px;
+    height: 0.47rem;
 
   }
   .el-input {
     display: inline-block;
     .borderBox();
-    height: 47px;
+    height: 0.47rem;
     width: 100%;
     padding-left: 30px;
   }
   .svg-container {
     position: absolute;
     top: 0;
-    padding: 6px 5px 6px 15px;
+    padding: 0.06rem 0.05rem 0.06rem 0.15rem;
     color: @dark_gray;
     vertical-align: middle;
     width: 30px;
